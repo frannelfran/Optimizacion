@@ -59,9 +59,8 @@ int main(int argc, char *argv[]) {
             menu(G.Es_dirigido(), opcion);
             switch (opcion) {
                 case 'c' :
-        
          	    cout << "Introduce el nombre completo del fichero de datos" << endl;
-                 cin >> nombrefichero;
+                cin >> nombrefichero;
                 G.actualizar(nombrefichero, error_apertura);
                 if (error_apertura == 1) {
                     cout << "Error en la apertura del fichero: revisa nombre y formato : puedes volver a intentarlo" << endl;
@@ -69,16 +68,10 @@ int main(int argc, char *argv[]) {
                 else {
                     cout << "Fichero cargado correctamente desde " << nombrefichero << endl;
                 };
-    
-        
                 break;
-
                 case 'i' :
-        
 		        cout << "Grafo cargado desde " << nombrefichero << endl;
                 G.Info_Grafo();
-    
-        
                 break;
             }
 		 //Situar aqu� el resto de opciones del men�
