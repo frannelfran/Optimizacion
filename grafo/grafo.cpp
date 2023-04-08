@@ -49,7 +49,6 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura)
 			//...
         }
     }
-
 }
 
 GRAFO::~GRAFO() { // Destructor de la clase grafo
@@ -97,10 +96,9 @@ void GRAFO::dfs_num(unsigned i, vector<LA_nodo>  L, vector<bool> &visitado, vect
 	visitado[i] = true;
     prenum[prenum_ind++]=i;//asignamos el orden de visita prenum que corresponde el nodo i
     for (unsigned j=0;j<L[i].size();j++)
-             if (!visitado[L[i][j].j])
-                {
-                dfs_num(L[i][j].j, L, visitado, prenum, prenum_ind, postnum, postnum_ind);
-                };
+        if (!visitado[L[i][j].j]) {
+            dfs_num(L[i][j].j, L, visitado, prenum, prenum_ind, postnum, postnum_ind);
+        };
     postnum[postnum_ind++]=i;//asignamos el orden de visita posnum que corresponde al nodo i
 }
 
