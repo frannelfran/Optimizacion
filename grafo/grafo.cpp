@@ -35,7 +35,7 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
         // leemos los m arcos
 		for (k=0;k<m;k++) {
 			textfile >> (unsigned &) i  >> (unsigned &) j >> (int &) dummy.c;
-			//damos los valores a dummy.j y dummy.c
+			textfile >> (unsigned &) i  >> (unsigned &) j >> (int &) dummy.j; //damos los valores a dummy.j y dummy.c
 			//situamos en la posici�n del nodo i a dummy mediante push_back
 			//pendiente de hacer un segundo push_back si es no dirigido. O no.
 			//pendiente la construcci�n de LP, si es dirigido
@@ -53,7 +53,7 @@ GRAFO::GRAFO(char nombrefichero[85], int &errorapertura) { // Constructor de la 
 	build (nombrefichero, errorapertura);
 }
 
-void GRAFO:: actualizar (char nombrefichero[85], int &errorapertura) { // Cargar otro grafo
+void GRAFO::actualizar(char nombrefichero[85], int &errorapertura) { // Cargar otro grafo
     //Limpiamos la memoria dinamica asumida en la carga previa, como el destructor
     destroy();
     //Leemos del fichero y actualizamos G con nuevas LS y, en su caso, LP
