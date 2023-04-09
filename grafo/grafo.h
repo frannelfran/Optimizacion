@@ -8,7 +8,6 @@
 #ifndef _GRAPH_H
 #define _GRAPH_H
 
-
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,8 +22,7 @@ const int maxint = 1000000; //Para ciertos algoritmos es necesario codificar est
 
 // definicion de un elemento de la lista de adyacencia
 
-typedef struct
-{
+typedef struct {
 	unsigned j; // nodo
 	int      c; // atributo para expresar los costes, pesos, las longitudes, las inversiones, etc...
 } ElementoLista;
@@ -32,8 +30,7 @@ typedef struct
 // definicion del tipo de una lista de adyacencia de un nodo
 typedef vector<ElementoLista> LA_nodo;
 
-class GRAFO
-{
+class GRAFO {
 	unsigned            dirigido;  //0 si el grafo es no dirigido y 1 si es dirigido
 	unsigned            n;         // numero de NODOS
 	unsigned            m;         // numero de ARCOS
@@ -45,15 +42,15 @@ class GRAFO
 	void dfs_num(unsigned i, vector<LA_nodo>  L, vector<bool> &visitado, vector<unsigned> &prenum, unsigned &prenum_ind, vector<unsigned> &postnum, unsigned &postnum_ind); //Recorrido en profundidad recursivo con recorridos enum y postnum
     void bfs_num(unsigned i, vector<LA_nodo>  L, vector<unsigned> &pred, vector<unsigned> &d); //Recorrido en amplitud con c�lculo de pred y d
 public:
-     GRAFO(char nombrefichero[], int &errorapertura);
-     void actualizar (char nombrefichero[], int &errorapertura);
-     unsigned Es_dirigido(); // devuelve 0 si el grafo es no dirigido y 1 si es dirigido
-     void Info_Grafo(); // devuelve informaci�n b�sica del grafo
-     void Mostrar_Listas(int l);  //Muestra la lista de adyacencia
-     void Mostrar_Matriz(); //Muestra la matriz de adyacencia: nodos y costes
-     void RecorridoProfundidad(); //Construye un recorrido en profundidad desde un nodo inicial
-     void RecorridoAmplitud(); //Construye un recorrido en amplitud desde un nodo inicial
-     ~GRAFO(); //Destructor del objeto grafo
+    GRAFO(char nombrefichero[], int &errorapertura);
+    void actualizar (char nombrefichero[], int &errorapertura);
+    unsigned Es_dirigido(); // devuelve 0 si el grafo es no dirigido y 1 si es dirigido
+    void Info_Grafo(); // devuelve informaci�n b�sica del grafo
+    void Mostrar_Listas(int l);  //Muestra la lista de adyacencia
+    void Mostrar_Matriz(); //Muestra la matriz de adyacencia: nodos y costes
+    void RecorridoProfundidad(); //Construye un recorrido en profundidad desde un nodo inicial
+    void RecorridoAmplitud(); //Construye un recorrido en amplitud desde un nodo inicial
+    ~GRAFO(); //Destructor del objeto grafo
 };
 
 #endif

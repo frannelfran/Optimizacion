@@ -8,25 +8,20 @@
 
 #include "grafo.h"
 
-void GRAFO :: destroy()
-{
-	for (unsigned i=0; i< n; i++)
-    {
+void GRAFO :: destroy() {
+	for (unsigned i=0; i< n; i++) {
 		LS[i].clear();
 		A[i].clear();
-		if (dirigido == 1)
-        {
+		if (dirigido == 1) {
             LP[i].clear();
         };
 	}
 	LS.clear();
 	LP.clear();
 	A.clear();
-
 }
 
-void GRAFO :: build (char nombrefichero[85], int &errorapertura)
-{
+void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
     ElementoLista     dummy;
 	ifstream textfile;
 	textfile.open(nombrefichero);
