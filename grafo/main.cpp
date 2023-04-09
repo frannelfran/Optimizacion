@@ -15,16 +15,15 @@ void menu (unsigned dirigido, char &opcion) {
     cout << "Optimiza!cion en Grafos, 2021-2022 NOMBRE DEL ESTUDIANTE" << endl;
     cout << "c. [c]argar grafo desde fichero" << endl;
     if (dirigido == 0) { //Grafo no dirigido
-        cout << "i. Mostrar [i]nformacion basica del grafo" << endl;
-        cout << "a. Mostrar la lista de [a]dyacencia del grafo" << endl;
-	    //Aqu� se a�aden m�s opciones al men� del grafo no dirigido
+            cout << "i. Mostrar [i]nformacion basica del grafo" << endl;
+            cout << "a. Mostrar la lista de [a]dyacencia del grafo" << endl;
+	    //Aquí se añaden más opciones al menú del grafo no dirigido
     }
-
     else {
         cout << "i. Mostrar [i]nformacion basica del grafo" << endl;
         cout << "s. Mostrar la lista de [s]ucesores del grafo" << endl;
         cout << "p. Mostrar la lista de [p]redecesores del grafo" << endl;
-	    //Aqu� se a�aden m�s opciones al men� del grafo dirigido
+	    //Aquí se añaden más opciones al menú del grafo dirigido
     };
     cout << "q. Finalizar el programa" << endl;
     cout << "Introduce la letra de la accion a ejecutar  > ";
@@ -40,42 +39,37 @@ int main(int argc, char *argv[]) {
 	    cout << "Cargando datos desde el fichero dado como argumento" << endl;
         strcpy(nombrefichero, argv[1]);
     }
-
     else {
         cout << "Introduce el nombre completo del fichero de datos" << endl;
         cin >> nombrefichero;
     };
-
     GRAFO G(nombrefichero, error_apertura);
     if (error_apertura == 1) {
         cout << "Error en la apertura del fichero desde argumento: revisa nombre y formato" << endl;
-
     }
-
     else {
         cout<< "Grafo cargado desde el fichero " << nombrefichero << endl;
-
         do {
             menu(G.Es_dirigido(), opcion);
             switch (opcion) {
                 case 'c' :
          	    cout << "Introduce el nombre completo del fichero de datos" << endl;
-                cin >> nombrefichero;
-                G.actualizar(nombrefichero, error_apertura);
-                if (error_apertura == 1) {
-                    cout << "Error en la apertura del fichero: revisa nombre y formato : puedes volver a intentarlo" << endl;
-                }
-                else {
-                    cout << "Fichero cargado correctamente desde " << nombrefichero << endl;
-                };
-                break;
+                    cin >> nombrefichero;
+                    G.actualizar(nombrefichero, error_apertura);
+                    if (error_apertura == 1) {
+                        cout << "Error en la apertura del fichero: revisa nombre y formato : puedes volver a intentarlo" << endl;
+                    }
+                    else {
+                        cout << "Fichero cargado correctamente desde " << nombrefichero << endl;
+                    };
+                    break;
                 case 'i' :
 		        cout << "Grafo cargado desde " << nombrefichero << endl;
                 G.Info_Grafo();
                 break;
             }
-		 //Situar aqu� el resto de opciones del men�
-        } while(opcion != 'q');
+		 //Situar aquí el resto de opciones del menú
+        } while (opcion != 'q');
     }
     cout << "Fin del programa" << endl;
 	return(0);
