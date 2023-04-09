@@ -30,8 +30,7 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura)
     ElementoLista     dummy;
 	ifstream textfile;
 	textfile.open(nombrefichero);
-	if (textfile.is_open())
-    {
+	if (textfile.is_open()) {
 		unsigned i, j, k;
 		// leemos por conversion implicita el numero de nodos, arcos y el atributo dirigido
 		textfile >> (unsigned &) n >> (unsigned &) m >> (unsigned &) dirigido;
@@ -66,9 +65,8 @@ void GRAFO:: actualizar (char nombrefichero[85], int &errorapertura) { // Cargar
     build(nombrefichero, errorapertura);
 }
 
-unsigned GRAFO::Es_dirigido()
-{
-
+unsigned GRAFO::Es_dirigido() {
+    
 }
 
 void GRAFO::Info_Grafo()
@@ -91,8 +89,7 @@ void GRAFO::Mostrar_Matriz() //Muestra la matriz de adyacencia, tanto los nodos 
 
 }
 
-void GRAFO::dfs_num(unsigned i, vector<LA_nodo>  L, vector<bool> &visitado, vector<unsigned> &prenum, unsigned &prenum_ind, vector<unsigned> &postnum, unsigned &postnum_ind) //Recorrido en profundidad recursivo con recorridos enum y postnum
-{
+void GRAFO::dfs_num(unsigned i, vector<LA_nodo>  L, vector<bool> &visitado, vector<unsigned> &prenum, unsigned &prenum_ind, vector<unsigned> &postnum, unsigned &postnum_ind) { //Recorrido en profundidad recursivo con recorridos enum y postnum
 	visitado[i] = true;
     prenum[prenum_ind++]=i;//asignamos el orden de visita prenum que corresponde el nodo i
     for (unsigned j=0;j<L[i].size();j++)
@@ -103,10 +100,6 @@ void GRAFO::dfs_num(unsigned i, vector<LA_nodo>  L, vector<bool> &visitado, vect
 }
 
 void GRAFO::RecorridoProfundidad() { // Recorrido en profundidad de un grafo
-    unsigned i;
-    vector<LA_nodo> L;
-    cout << "Vamos a construir un recorrido en profundidad" << endl;
-    cout << "Elija nodo de partida? [" << "-" << "]:";
 
 }
 
@@ -128,29 +121,20 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
     queue<unsigned> cola; //creamos e inicializamos la cola
     cola.push(i);//iniciamos el recorrido desde el nodo i+1
 
-    while (!cola.empty()) //al menos entra una vez al visitar el nodo i+1 y contin�a hasta que la cola se vac�e
-    {   unsigned k = cola.front(); //cogemos el nodo k+1 de la cola
+    while (!cola.empty()) { //al menos entra una vez al visitar el nodo i+1 y contin�a hasta que la cola se vac�e
+        unsigned k = cola.front(); //cogemos el nodo k+1 de la cola
         cola.pop(); //lo sacamos de la cola
         //Hacemos el recorrido sobre L desde el nodo k+1
-        for (unsigned j=0;j<L[k].size();j++)
+        for (unsigned j=0;j<L[k].size();j++) {
             //Recorremos todos los nodos u adyacentes al nodo k+1
             //Si el nodo u no est� visitado
-            {
             //Lo visitamos
             //Lo metemos en la cola
             //le asignamos el predecesor
             //le calculamos su etiqueta distancia
-            };
+        };
         //Hemos terminado pues la cola est� vac�a
     };
 }
 
 void RecorridoAmplitud(); //Construye un recorrido en amplitud desde un nodo inicial
-
-
-
-
-
-
-
-
