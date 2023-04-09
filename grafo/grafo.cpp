@@ -34,19 +34,16 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
 		LS.resize(n);
         // leemos los m arcos
 		for (k=0;k<m;k++) {
-			textfile >> (unsigned &) i  >> (unsigned &) dummy.j >> (int &) dummy.c;
-            LS[i].push_back(dummy);
-			//damos los valores a dummy.j y dummy.c
-			//situamos en la posici�n del nodo i a dummy mediante push_back
+			textfile >> (unsigned &) i  >> (unsigned &) dummy.j >> (int &) dummy.c; // damos los valores a dummy.j y dummy.c
+            LS[i].push_back(dummy); //situamos en la posición del nodo i a dummy mediante push_back
             if(dirigido == 0) {
                 LS[i].push_back(dummy);
             }
 			//pendiente de hacer un segundo push_back si es no dirigido. O no.
             else {
                 LP.resize(n);
-                LP[i].push_back(dummy);
+                LP[i].push_back(dummy); // pendiente la construcción de LP, si es dirigido
             }
-			//pendiente la construcci�n de LP, si es dirigido
 			//pendiente del valor a devolver en errorapertura
 			//...
         }
@@ -68,24 +65,36 @@ void GRAFO:: actualizar (char nombrefichero[85], int &errorapertura) {
     build(nombrefichero, errorapertura);
 }
 
-unsigned GRAFO::Es_dirigido()
-{
+unsigned GRAFO::Es_dirigido() {
+    if(dirigido == 1) {
+        return true;
+    }
+    return !true;
+}
+
+void GRAFO::Info_Grafo() {
+    cout << "Numero de nodos: " << n << endl;
+    cout << "Numero de arcos: " << m << endl;
+    if(dirigido == 0) {
+        cout << "El grafo es no dirigido " << endl; 
+    }
+    else {
+        cout << "El grafo es dirigido" << endl;
+    }
+}
+
+void Mostrar_Lista(vector<LA_nodo> L) {
 
 }
 
-void GRAFO::Info_Grafo()
-{
-
-}
-
-void Mostrar_Lista(vector<LA_nodo> L)
-{
-
-}
-
-void GRAFO :: Mostrar_Listas (int l)
-{
-
+void GRAFO :: Mostrar_Listas (int l) {
+    ElementoLista dummy;
+    ifstream textfile;
+    unsigned i, j, k;
+    textfile >> (unsigned &) n >> (unsigned &) m >> (unsigned &) dirigido;
+    for (k=0;k<m;k++) { // Leemeos los m arcos
+        textfile >> (unsigned &) i  >> (unsigned &) dummy.j >> (int &) dummy.c;
+    }
 }
 
 void GRAFO::Mostrar_Matriz() //Muestra la matriz de adyacencia, tanto los nodos adyacentes como sus costes
