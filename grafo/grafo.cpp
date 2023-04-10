@@ -32,11 +32,14 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
 		// los nodos internamente se numeran desde 0 a n-1
 		// creamos las n listas de sucesores
 		LS.resize(n);
+        if(dirigido == 1) { // Si el grafo es dirigido creamos las n listas de predecesores
+            LP.resize(n);
+        }
         // leemos los m arcos
 		for (k=0;k<m;k++) {
 			textfile >> (unsigned &) i  >> (unsigned &) j >> (int &) dummy.c; // Valor de dummy.c
             dummy.j = j - 1; // Valor de dummy.j
-            // Creo un auxiliar para los predecesores y la lista de adyacencia del struct "Elementolista"
+            // Creo un dummy2 de la estructura "ElementoLista" para almacenar los predecesores y la lista de adyacencia
             ElementoLista dummy2;
             dummy2.j = i - 1;
             dummy2.c = dummy.c;
@@ -81,33 +84,22 @@ void GRAFO::Info_Grafo() {
     cout << "Numero de nodos: " << n << endl;
     cout << "Orden del grafo: " << n << endl;
     cout << "Numero de arcos: " << m << endl;
-
-    Es_dirigido();
-    switch (Es_dirigido()) {
-        case 0: // Grafo no dirigido
-        cout << "El grafo es no dirigido " << endl; 
-        break;
-        case 1: // Grafo dirigido
-        cout << "El grafo es dirigido" << endl;
-        break;
-        default:
-        break;
-    }
+    cout << (Es_dirigido() == 1 ? "Es dirigido" : "No es dirigido") << endl;
     cout << endl; // Nueva línea
 }
 
 void Mostrar_Lista(vector<LA_nodo> L) {
-    for(int i = 0; i < L.size(); i++) {
+    for(int i = 0; i < L.size(); i++) { // Recorrer la lista
         cout << "nodo " << i + 1 << ": {";
         for(ElementoLista dummy : L[i]) {
-            if(L[i].at(L[i].size() - 1).j != dummy.j) { // 
+            if(L[i].at(L[i].size() - 1).j != dummy.j) {
                 cout << dummy.j + 1 << ",";
             }
             else {
                 cout << dummy.j + 1;
             }
         }
-        cout << "} "; 
+        cout << "} ";
     }
     cout << endl; // Nueva línea
 }

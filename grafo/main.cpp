@@ -78,14 +78,17 @@ int main(int argc, char *argv[]) {
 		        cout << "Grafo cargado desde " << nombrefichero << endl;
                 G.Info_Grafo();
                 break;
-                case 's': // lista de sucesores
+                // Lista de sucesores
+                case 's':
                 l = G.Es_dirigido();
                 G.Mostrar_Listas(l);
                 break;
-                case 'p': // lista de predecesores
+                // Lista de predecesores
+                case 'p':
                 l = G.Es_dirigido() - 2;
                 G.Mostrar_Listas(l);
                 break;
+                // Lista de adyacencia
                 case 'a':
                 l = G.Es_dirigido();
                 G.Mostrar_Listas(l);
