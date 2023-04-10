@@ -34,15 +34,20 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
 		LS.resize(n);
         // leemos los m arcos
 		for (k=0;k<m;k++) {
-			textfile >> (unsigned &) i  >> (unsigned &) dummy.j >> (int &) dummy.c; // damos los valores a dummy.j y dummy.c
-            LS[i].push_back(dummy); //situamos en la posición del nodo i a dummy mediante push_back
+			textfile >> (unsigned &) i  >> (unsigned &) j >> (int &) dummy.c; // Valor de dummy.c
+            dummy.j = j - 1; // Valor de dummy.j
+            // Creo un auxiliar para los predecesores y la lista de adyacencia del struct "Elementolista"
+            ElementoLista dummy2;
+            dummy2.j = i - 1;
+            dummy2.c = dummy.c;
+            LS[i - 1].push_back(dummy); //situamos en la posición del nodo i a dummy mediante push_back
+
+            //pendiente de hacer un segundo push_back si es no dirigido. O no. 
             if(dirigido == 0) {
-                LS[i].push_back(dummy);
+                LS[j - 1].push_back(dummy2);
             }
-			//pendiente de hacer un segundo push_back si es no dirigido. O no.
-            else {
-                LP.resize(n);
-                LP[i].push_back(dummy); // pendiente la construcción de LP, si es dirigido
+            else if(dirigido == 1) {
+                LP[j - 1].push_back(dummy2); // pendiente la construcción de LP, si es dirigido
             }
 			//pendiente del valor a devolver en errorapertura
 			//...
@@ -74,27 +79,53 @@ unsigned GRAFO::Es_dirigido() {
 
 void GRAFO::Info_Grafo() {
     cout << "Numero de nodos: " << n << endl;
+    cout << "Orden del grafo: " << n << endl;
     cout << "Numero de arcos: " << m << endl;
-    if(dirigido == 0) {
+
+    Es_dirigido();
+    switch (Es_dirigido()) {
+        case 0: // Grafo no dirigido
         cout << "El grafo es no dirigido " << endl; 
-    }
-    else {
+        break;
+        case 1: // Grafo dirigido
         cout << "El grafo es dirigido" << endl;
+        break;
+        default:
+        break;
     }
+    cout << endl; // Nueva línea
 }
 
 void Mostrar_Lista(vector<LA_nodo> L) {
-
+    for(int i = 0; i < L.size(); i++) {
+        cout << "nodo " << i + 1 << ": {";
+        for(ElementoLista dummy : L[i]) {
+            if(L[i].at(L[i].size() - 1).j != dummy.j) { // 
+                cout << dummy.j + 1 << ",";
+            }
+            else {
+                cout << dummy.j + 1;
+            }
+        }
+        cout << "} "; 
+    }
+    cout << endl; // Nueva línea
 }
 
 void GRAFO :: Mostrar_Listas (int l) {
-    ElementoLista dummy;
-    ifstream textfile;
-    unsigned i, j, k;
-    textfile >> (unsigned &) n >> (unsigned &) m >> (unsigned &) dirigido;
-    for (k=0;k<m;k++) { // Leemeos los m arcos
-        textfile >> (unsigned &) i  >> (unsigned &) dummy.j >> (int &) dummy.c;
+    if(l == 0) { // Mostrar lista de adyacencia
+        cout << "--Lista de adyacencia--" << endl;
+        Mostrar_Lista(LS);
     }
+    if(l == 1) { // Mostrar lista de sucesores
+        cout << "--Lista de sucesores--" << endl;
+        Mostrar_Lista(LS);
+    }
+    if(l == -1) { // Mostrar lista de predecesores
+        cout << "--Lista de predecesores--" << endl;
+        Mostrar_Lista(LP);
+    }
+    cout << endl; // Nueva línea
 }
 
 void GRAFO::Mostrar_Matriz() //Muestra la matriz de adyacencia, tanto los nodos adyacentes como sus costes
@@ -113,7 +144,7 @@ void GRAFO::dfs_num(unsigned i, vector<LA_nodo>  L, vector<bool> &visitado, vect
     postnum[postnum_ind++]=i;//asignamos el orden de visita posnum que corresponde al nodo i
 }
 
-void GRAFO::RecorridoProfundidad()
+void GRAFO::RecorridoProfundidad() 
 {
 
 }
@@ -152,4 +183,10 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
     };
 }
 
-void RecorridoAmplitud(); //Construye un recorrido en amplitud desde un nodo inicial
+void RecorridoAmplitud() { //Construye un recorrido en amplitud desde un nodo inicial
+    //creación e inicialización de variables y vectores
+
+    //solicitud al usuario del nodo inicial del recorrido en amplitud
+    //mostrar en pantalla la etiqueta distancia
+    //mostrar en pantalla los predecesores
+}

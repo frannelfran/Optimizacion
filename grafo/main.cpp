@@ -86,10 +86,15 @@ int main(int argc, char *argv[]) {
                 l = G.Es_dirigido() - 2;
                 G.Mostrar_Listas(l);
                 break;
+                case 'a':
+                l = G.Es_dirigido();
+                G.Mostrar_Listas(l);
+                break;
             }
 		//Situar aquí el resto de opciones del menú
         } while (opcion != 'q');
     }
     cout << "Fin del programa" << endl;
-	return(0);
+    exit(EXIT_SUCCESS);
+	return 0;
 };
