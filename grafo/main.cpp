@@ -11,7 +11,7 @@
 
 void menu (unsigned dirigido, char &opcion) {
 //Expresion del menu de opciones segun sea un grafo dirigido o no dirigido
-    cout << "Optimiza!cion en Grafos, 2021-2022 NOMBRE DEL ESTUDIANTE" << endl;
+    cout << "Optimiza!cion en Grafos, 2021-2022 FRANCO ALLA" << endl;
     cout << "c. [c]argar grafo desde fichero" << endl;
     if (dirigido == 0) { //Grafo no dirigido
         cout << "i. Mostrar [i]nformacion basica del grafo" << endl;
@@ -92,6 +92,10 @@ int main(int argc, char *argv[]) {
                 case 'a':
                 l = G.Es_dirigido();
                 G.Mostrar_Listas(l);
+                break;
+                // Recorrido en amplitud
+                case 'm':
+                G.RecorridoAmplitud();
                 break;
             }
 		//Situar aquí el resto de opciones del menú

@@ -166,19 +166,51 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
         for (unsigned j=0;j<L[k].size();j++) {
             //Recorremos todos los nodos u adyacentes al nodo k+1
             //Si el nodo u no est� visitado
+            int nodo_u = L[k].at(j).j;
+            if(visitado[nodo_u] == true) {
+                continue;
+            }
             //Lo visitamos
+            visitado[nodo_u] = true;
             //Lo metemos en la cola
+            cola.push(nodo_u);
             //le asignamos el predecesor
+            pred[nodo_u] = k;
             //le calculamos su etiqueta distancia
+            d[nodo_u] = d[k] + 1;
         };
-        //Hemos terminado pues la cola est� vac�a
-    };
+        //Hemos terminado pues la cola está vacía
+    }
 }
 
-void RecorridoAmplitud() { //Construye un recorrido en amplitud desde un nodo inicial
-    //creación e inicialización de variables y vectores
+void GRAFO::RecorridoAmplitud() { //Construye un recorrido en amplitud desde un nodo inicial
+   //creación e inicialización de variables y vectores
+    int nodo_u;
+    int nodo;
+    vector<unsigned> pred;
+    vector<unsigned> d;
 
     //solicitud al usuario del nodo inicial del recorrido en amplitud
+    cout << "--Recorrido en amplitud--" << endl;
+    cout << "Elije un nodo de partida: ";
+    cin >> nodo_u;
+    nodo_u -= 1;
+    bfs_num(nodo_u, LS, pred, d);
+    
     //mostrar en pantalla la etiqueta distancia
+    cout << "Nodo según distancia al nodo inicial en numero de aristas" << endl;
+    nodo = 1;
+    for(auto element : d) {
+        cout << "[" << nodo << "] " << element << " ";
+        nodo++;
+    }
+    cout << endl;
     //mostrar en pantalla los predecesores
+    cout << "Predecesores de cada nodo: " << endl;
+    nodo = 1;
+    for(auto element : pred) {
+        cout << "[" << nodo << "] " << element + 1 << " ";
+        nodo++;
+    }
+    cout << endl;
 }
