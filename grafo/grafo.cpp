@@ -94,12 +94,14 @@ void Mostrar_Lista(vector<LA_nodo> L) {
         for(ElementoLista dummy : L[i]) {
             if(L[i].at(L[i].size() - 1).j != dummy.j) {
                 cout << dummy.j + 1 << ",";
+                cout << "(" << dummy.c  << ")";
             }
             else {
                 cout << dummy.j + 1;
+                cout << "(" << dummy.c << ")";
             }
         }
-        cout << "} ";
+        cout << "} "<< " " << endl;
     }
     cout << endl; // Nueva línea
 }
