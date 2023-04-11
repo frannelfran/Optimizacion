@@ -1,5 +1,5 @@
  /*
- *  GRAFO.CPP - Plantilla para la implementaci�n de la clase GRAFOS
+ *  GRAFO.CPP - Plantilla para la implementación de la clase GRAFOS
  *
  *
  *  Autores : Antonio Sedeno Noda, Sergio Alonso
