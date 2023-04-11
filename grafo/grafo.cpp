@@ -11,14 +11,14 @@
 void GRAFO :: destroy() {
 	for (unsigned i=0; i< n; i++) {
 		LS[i].clear();
-		A[i].clear();
+		// A[i].clear();
 		if (dirigido == 1) {
             LP[i].clear();
         };
 	}
 	LS.clear();
 	LP.clear();
-	A.clear();
+	// A.clear();
 }
 
 void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
@@ -39,14 +39,14 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
 		for (k=0;k<m;k++) {
 			textfile >> (unsigned &) i  >> (unsigned &) j >> (int &) dummy.c; // Valor de dummy.c
             dummy.j = j - 1; // Valor de dummy.j
+            LS[i - 1].push_back(dummy); //situamos en la posición del nodo i a dummy mediante push_back
             // Creo un dummy2 de la estructura "ElementoLista" para almacenar los predecesores y la lista de adyacencia
             ElementoLista dummy2;
             dummy2.j = i - 1;
             dummy2.c = dummy.c;
-            LS[i - 1].push_back(dummy); //situamos en la posición del nodo i a dummy mediante push_back
 
             //pendiente de hacer un segundo push_back si es no dirigido. O no. 
-            if(dirigido == 0) {
+            if(dirigido == 0 and i != j) {
                 LS[j - 1].push_back(dummy2);
             }
             else if(dirigido == 1) {
