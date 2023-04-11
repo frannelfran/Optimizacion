@@ -147,7 +147,7 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
 				vector<LA_nodo>  L, //lista que recorremos, LS o LP; por defecto LS
 				vector<unsigned> &pred, //vector de predecesores en el recorrido
 				vector<unsigned> &d) //vector de distancias a nodo i+1
-//Recorrido en amplitud con la construcci�n de pred y d: usamos la cola
+//Recorrido en amplitud con la construcción de pred y d: usamos la cola
 {
     vector<bool> visitado; //creamos e iniciamos el vector visitado
     visitado.resize(n, false);
@@ -167,7 +167,7 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
         //Hacemos el recorrido sobre L desde el nodo k+1
         for (unsigned j=0;j<L[k].size();j++) {
             //Recorremos todos los nodos u adyacentes al nodo k+1
-            //Si el nodo u no est� visitado
+            //Si el nodo u no está visitado
             int nodo_u = L[k].at(j).j;
             if(visitado[nodo_u] == true) {
                 continue;
