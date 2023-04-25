@@ -166,20 +166,20 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
         cola.pop(); //lo sacamos de la cola
         //Hacemos el recorrido sobre L desde el nodo k+1
         for (unsigned j=0;j<L[k].size();j++) {
-            //Recorremos todos los nodos u adyacentes al nodo k+1
-            //Si el nodo u no está visitado
-            int nodo_u = L[k].at(j).j;
-            if(visitado[nodo_u] == true) {
+            //Recorremos todos los nodos nodo_actual adyacentes al nodo k+1
+            //Si el nodo nodo_actual no está visitado
+            int nodo_actual = L[k].at(j).j;
+            if(visitado[nodo_actual] == true) {
                 continue;
             }
             //Lo visitamos
-            visitado[nodo_u] = true;
+            visitado[nodo_actual] = true;
             //Lo metemos en la cola
-            cola.push(nodo_u);
+            cola.push(nodo_actual);
             //le asignamos el predecesor
-            pred[nodo_u] = k;
+            pred[nodo_actual] = k;
             //le calculamos su etiqueta distancia
-            d[nodo_u] = d[k] + 1;
+            d[nodo_actual] = d[k] + 1;
         };
         //Hemos terminado pues la cola está vacía
     }
@@ -187,7 +187,7 @@ void GRAFO::bfs_num(	unsigned i, //nodo desde el que realizamos el recorrido en 
 
 void GRAFO::RecorridoAmplitud() { //Construye un recorrido en amplitud desde un nodo inicial
    //creación e inicialización de variables y vectores
-    int nodo_u;
+    int nodo_actual;
     int nodo;
     vector<unsigned> pred;
     vector<unsigned> d;
@@ -195,9 +195,9 @@ void GRAFO::RecorridoAmplitud() { //Construye un recorrido en amplitud desde un 
     //solicitud al usuario del nodo inicial del recorrido en amplitud
     cout << "--Recorrido en amplitud--" << endl;
     cout << "Elije un nodo de partida: ";
-    cin >> nodo_u;
-    nodo_u -= 1;
-    bfs_num(nodo_u, LS, pred, d);
+    cin >> nodo_actual;
+    nodo_actual -= 1;
+    bfs_num(nodo_actual, LS, pred, d);
     
     //mostrar en pantalla la etiqueta distancia
     cout << "Nodo según distancia al nodo inicial en numero de aristas" << endl;
@@ -218,54 +218,52 @@ void GRAFO::RecorridoAmplitud() { //Construye un recorrido en amplitud desde un 
 }
 
 void GRAFO::Algoritmo_Prim() {
-    int nodo_u;
-    cout << "Nodo inicial? ";
-    cin >> nodo_u;
-    nodo_u -= 1;
+  int T{0};
+  // INicializo los vectores
+  //Nodos Marcados
+  vector<bool> M(n, false);
+  // Costes 
+  vector<int> coste(n, maxint);
+  // Predecesores
+  vector<unsigned> pred(n, 0);
+  // Coste_total
+  int coste_total{0}; // coste total del árbol
+  unsigned nodo_actual{0}; // nodo actual
 
-    // T = ∅
-    int T = {0};
-    int u = {nodo_u};
-    // Para todo nodo i de V hacer coste[i] = ∞
-    vector<int> coste;
-    coste.resize(n, maxint);
-    coste[nodo_u] = 0;
-    // M = {1}
-    vector<bool> M;
-    M.resize(n, false);
-    M[nodo_u] = true;
-    // pred[1] = 1
-    vector<int> pred;
-    pred.resize(n, -1);
-    pred[nodo_u] = nodo_u;
+  cout << "Nodo Inicial? ";
+  cin >> nodo_actual;
 
-    int menor_coste = {maxint};
-    int next_u = {nodo_u};
-    int coste_total = {0};
-    
-    // Mientras en T no haya n-1 aristas hacer
-    while(T != n - 1) {
-        // para todo j adyacente a u en V-M hacer
-        for(int i = 0; i < LS[u].size(); i++) {
-            // si coste[j] > w(u, j) entonces
-            if(!M[LS[u][i].j] and coste[LS[u][i].j] > LS[u][i].c) {
-                // pred[j] = u //cambio el nodo de conexión
-                coste[LS[u][i].j] = LS[u][i].c;
-                pred[LS[u][i].j] = u;
-            }
-            if(!M[LS[u][i].j] and menor_coste > coste[LS[u][i].j]) {
-                // coste[j] = w(u,j) Esta arista es menos costosa
-                menor_coste = coste[LS[u][i].j];
-                next_u = LS[u][i].j;
+  cout << "Algoritmo de Prim" << endl;
+  cout << "Iniciamos desde el nodo: " << nodo_actual << endl;
+  nodo_actual-= 1;
+
+  coste[0] = 0; // Coste del primer nodo
+  coste_total = 0; // Inicializo el coste total a 0
+
+    while (T < n) {
+        for (int i = 0; i < LS[nodo_actual].size(); ++i) {
+            if (M[LS[nodo_actual][i].j] == false and LS[nodo_actual][i].c < coste[LS[nodo_actual][i].j]) {
+                coste[LS[nodo_actual][i].j] = LS[nodo_actual][i].c;
+                pred[LS[nodo_actual][i].j] = nodo_actual;
             }
         }
-        cout << "(" << u + 1 << "," << next_u + 1 << ") [" << coste[next_u] << "]" << endl;
-        coste_total = coste_total + coste[next_u];
-        // sea u = nodo con menor coste en V-M
-        u = next_u;
-        // M = M U {u}
-        M[u] = true;
-        menor_coste = maxint;
+        int min{maxint};
+        for (int i = 0; i < n; ++i) {
+            if (M[i] == false and coste[i] < min) {
+                min = coste[i];
+                nodo_actual = i;
+            }
+        }
+        M[nodo_actual] = true; // Se actualiza el nodo visitado
         T++;
     }
+    for (int i = 0; i < n; ++i) {
+        if (pred[i] != 0) {
+            cout << "Estamos en la arista " << pred[i] + 1; // Muestra en que arista estamos situados
+            cout << " cuyo nodo sucesor es el " << i + 1; // Nodo sucesor
+            cout << " y el coste de la sección == " << coste[i] << endl; // Mostramos el coste de cada nodo
+            coste_total += coste[i]; // Se actualiza el coste
+        }
+    }
+    cout << "Coste total == " << coste_total << endl; // MUestra el coste total
 }
