@@ -50,7 +50,8 @@ public:
   void Mostrar_Matriz(); //Muestra la matriz de adyacencia: nodos y costes
   void RecorridoProfundidad(); //Construye un recorrido en profundidad desde un nodo inicial
   void RecorridoAmplitud(); //Construye un recorrido en amplitud desde un nodo inicial
-  ~GRAFO(); //Destructor del objeto grafo
+  void Algoritmo_Prim(); // Algoritmo de Prim
+	~GRAFO(); //Destructor del objeto grafo
 };
 
 #endif

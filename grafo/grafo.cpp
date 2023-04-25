@@ -216,3 +216,56 @@ void GRAFO::RecorridoAmplitud() { //Construye un recorrido en amplitud desde un 
     }
     cout << endl;
 }
+
+void GRAFO::Algoritmo_Prim() {
+    int nodo_u;
+    cout << "Nodo inicial? ";
+    cin >> nodo_u;
+    nodo_u -= 1;
+
+    // T = ∅
+    int T = {0};
+    int u = {nodo_u};
+    // Para todo nodo i de V hacer coste[i] = ∞
+    vector<int> coste;
+    coste.resize(n, maxint);
+    coste[nodo_u] = 0;
+    // M = {1}
+    vector<bool> M;
+    M.resize(n, false);
+    M[nodo_u] = true;
+    // pred[1] = 1
+    vector<int> pred;
+    pred.resize(n, -1);
+    pred[nodo_u] = nodo_u;
+
+    int menor_coste = {maxint};
+    int next_u = {nodo_u};
+    int coste_total = {0};
+    
+    // Mientras en T no haya n-1 aristas hacer
+    while(T != n - 1) {
+        // para todo j adyacente a u en V-M hacer
+        for(int i = 0; i < LS[u].size(); i++) {
+            // si coste[j] > w(u, j) entonces
+            if(!M[LS[u][i].j] and coste[LS[u][i].j] > LS[u][i].c) {
+                // pred[j] = u //cambio el nodo de conexión
+                coste[LS[u][i].j] = LS[u][i].c;
+                pred[LS[u][i].j] = u;
+            }
+            if(!M[LS[u][i].j] and menor_coste > coste[LS[u][i].j]) {
+                // coste[j] = w(u,j) Esta arista es menos costosa
+                menor_coste = coste[LS[u][i].j];
+                next_u = LS[u][i].j;
+            }
+        }
+        cout << "(" << u + 1 << "," << next_u + 1 << ") [" << coste[next_u] << "]" << endl;
+        coste_total = coste_total + coste[next_u];
+        // sea u = nodo con menor coste en V-M
+        u = next_u;
+        // M = M U {u}
+        M[u] = true;
+        menor_coste = maxint;
+        T++;
+    }
+}
