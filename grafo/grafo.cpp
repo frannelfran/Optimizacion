@@ -218,38 +218,41 @@ void GRAFO::RecorridoAmplitud() { //Construye un recorrido en amplitud desde un 
 }
 
 void GRAFO::Algoritmo_Prim() {
-  int T{0};
-  // INicializo los vectores
-  //Nodos Marcados
-  vector<bool> M(n, false);
-  // Costes 
-  vector<int> coste(n, maxint);
-  // Predecesores
-  vector<unsigned> pred(n, 0);
-  // Coste_total
-  int coste_total{0}; // coste total del árbol
-  unsigned nodo_actual{0}; // nodo actual
+    // T = ∅
+    int T{0};
+    // Inicializo los vectores
+    //Nodos Marcados
+    vector<bool> M(n, false);
+    // Costes 
+    vector<int> coste(n, maxint);
+    // Predecesores
+    vector<unsigned> pred(n, 0);
+    // Coste_total
+    int coste_total{0}; // coste total del árbol
+    unsigned nodo_actual{0}; // nodo actual
 
-  cout << "Nodo Inicial? ";
-  cin >> nodo_actual;
+    cout << "Nodo Inicial? ";
+    cin >> nodo_actual;
 
-  cout << "Algoritmo de Prim" << endl;
-  cout << "Iniciamos desde el nodo: " << nodo_actual << endl;
-  nodo_actual-= 1;
+    cout << "Algoritmo de Prim" << endl;
+    cout << "Iniciamos desde el nodo: " << nodo_actual << endl;
+    nodo_actual-= 1;
 
-  coste[0] = 0; // Coste del primer nodo
-  coste_total = 0; // Inicializo el coste total a 0
+    coste[0] = 0; // Coste del primer nodo
+    coste_total = 0; // Inicializo el coste total a 0
 
+    // Mientras en T no haya n-1 aristas hacer
     while (T < n) {
         for (int i = 0; i < LS[nodo_actual].size(); ++i) {
             if (M[LS[nodo_actual][i].j] == false and LS[nodo_actual][i].c < coste[LS[nodo_actual][i].j]) {
-                coste[LS[nodo_actual][i].j] = LS[nodo_actual][i].c;
-                pred[LS[nodo_actual][i].j] = nodo_actual;
+                coste[LS[nodo_actual][i].j] = LS[nodo_actual][i].c; // actualiza el costo mínimo conocido hasta el momento para llegar a un nodo vecino específico
+                pred[LS[nodo_actual][i].j] = nodo_actual; // El predecesor del nodo es el nodo actual que se está examinando
             }
         }
         int min{maxint};
         for (int i = 0; i < n; ++i) {
-            if (M[i] == false and coste[i] < min) {
+            if (M[i] == false and coste[i] < min) { // Comprueba si no se ha visitado el nodo i y si el coste del nodo i es menor que la variable min
+                // coste[j] = w(u,j) Esta arista es menos costosa
                 min = coste[i];
                 nodo_actual = i;
             }
@@ -258,7 +261,7 @@ void GRAFO::Algoritmo_Prim() {
         T++;
     }
     for (int i = 0; i < n; ++i) {
-        if (pred[i] != 0) {
+        if (pred[i] != 0) { // Comprueba si el predecesor de i es válido en el camino más corto encontrado hasta el momento
             cout << "Estamos en la arista " << pred[i] + 1; // Muestra en que arista estamos situados
             cout << " cuyo nodo sucesor es el " << i + 1; // Nodo sucesor
             cout << " y el coste de la sección == " << coste[i] << endl; // Mostramos el coste de cada nodo
