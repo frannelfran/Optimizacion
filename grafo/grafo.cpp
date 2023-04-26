@@ -236,21 +236,21 @@ void GRAFO::Algoritmo_Prim() {
 
     cout << "Algoritmo de Prim" << endl;
     cout << "Iniciamos desde el nodo: " << nodo_actual << endl;
-    nodo_actual-= 1;
+    nodo_actual--;
 
     coste[0] = 0; // Coste del primer nodo
     coste_total = 0; // Inicializo el coste total a 0
 
     // Mientras en T no haya n-1 aristas hacer
     while (T < n) {
-        for (int i = 0; i < LS[nodo_actual].size(); ++i) {
+        for (unsigned i {0}; i < LS[nodo_actual].size(); ++i) {
             if (M[LS[nodo_actual][i].j] == false and LS[nodo_actual][i].c < coste[LS[nodo_actual][i].j]) {
                 coste[LS[nodo_actual][i].j] = LS[nodo_actual][i].c; // actualiza el costo mínimo conocido hasta el momento para llegar a un nodo vecino específico
                 pred[LS[nodo_actual][i].j] = nodo_actual; // El predecesor del nodo es el nodo actual que se está examinando
             }
         }
         int min{maxint};
-        for (int i = 0; i < n; ++i) {
+        for (unsigned i {0}; i < n; ++i) {
             if (M[i] == false and coste[i] < min) { // Comprueba si no se ha visitado el nodo i y si el coste del nodo i es menor que la variable min
                 // coste[j] = w(u,j) Esta arista es menos costosa
                 min = coste[i];
@@ -260,10 +260,10 @@ void GRAFO::Algoritmo_Prim() {
         M[nodo_actual] = true; // Se actualiza el nodo visitado
         T++;
     }
-    for (int i = 0; i < n; ++i) {
+    for (unsigned i {0}; i < n; ++i) {
         if (pred[i] != 0) { // Comprueba si el predecesor de i es válido en el camino más corto encontrado hasta el momento
-            cout << "Estamos en la arista " << pred[i] + 1; // Muestra en que arista estamos situados
-            cout << " cuyo nodo sucesor es el " << i + 1; // Nodo sucesor
+            cout << "Estamos en la arista del nodo " << pred[i] + 1; // Muestra en que arista estamos situados
+            cout << " hacía el nodo " << i + 1; // Nodo sucesor
             cout << " y el coste de la sección == " << coste[i] << endl; // Mostramos el coste de cada nodo
             coste_total += coste[i]; // Se actualiza el coste
         }
