@@ -272,6 +272,7 @@ void GRAFO::Algoritmo_Prim() {
 }
 
 void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
+    cout << "soluciones:" << endl;
     vector<bool> PermanentementeEtiquetado;
     vector<int> d;
     vector<unsigned> pred;
@@ -314,28 +315,28 @@ void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
         // Si el candidato == UERROR, significa que hemos acabado
         if(candidato == UERROR) break;
         // Si no es igual se etiqueta como Permanentementeetiquetado
-        PermanentementeEtiquetado[candidato] == true;
+        PermanentementeEtiquetado[candidato] = true;
         // Buscamos los atajos
-        for (unsigned i=0; i<LS[candidato].size(); i++) {
+        for (unsigned i = 0; i < LS[candidato].size(); i++) {
             if (d[LS[candidato][i].j] > d[candidato] + LS[candidato][i].c) {
                 d[LS[candidato][i].j] = d[candidato] + LS[candidato][i].c;
                 pred[LS[candidato][i].j] = candidato;
             }
             comparaciones++;
         }
-
         // Hacemos todo lo de antes mientras haya candidato
     }   while (candidato != UERROR);
     
     // En esta parte del código, mostramos los caminos mínimos para cada nodo si los hay.
-    for (unsigned i=0; i<n; i++) {
+    for (unsigned i = 0; i < n; i++) {
         if (d[i] != maxint) {
-            cout << "Elcamino mínimo desde " << s+1 << " hasta " << i+1 << " es: ";
+            cout << "El camino mínimo desde " << s+1 << " hasta " << i+1 << " es: ";
             cout << i+1 << " <- " << pred[i]+1;
             cout << " y su longitud es " << d[i] << endl;
         }
     }
 }
+
 
 void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
     vector<int> d;
@@ -396,6 +397,7 @@ void GRAFO::ComparativaCM() {
     cin >> s;
     Dijkstra_(comparacionesDijkstra, s-1);
     cout << "Comparaciones Dijkstra: " << comparacionesDijkstra << endl;
+    cout << endl; // Nueva línea
     BellmanFordEnd_(comparacionesBellmanFord, s-1);
     cout << "Comparaciones Bellman-Ford: " << comparacionesBellmanFord << endl;
 }
