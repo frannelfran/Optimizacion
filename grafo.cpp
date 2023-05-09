@@ -52,8 +52,10 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
             else if(dirigido == 1) {
                 LP[j - 1].push_back(dummy2); // pendiente la construcción de LP, si es dirigido
             }
+
 			//pendiente del valor a devolver en errorapertura
 			//...
+            textfile.close();
         }
     }
 }
