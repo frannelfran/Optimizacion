@@ -337,7 +337,6 @@ void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
     }
 }
 
-
 void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
     vector<int> d;
     vector<unsigned> pred;
