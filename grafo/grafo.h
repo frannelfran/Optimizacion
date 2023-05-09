@@ -51,6 +51,9 @@ public:
   void RecorridoProfundidad(); //Construye un recorrido en profundidad desde un nodo inicial
   void RecorridoAmplitud(); //Construye un recorrido en amplitud desde un nodo inicial
   void Algoritmo_Prim(); // Algoritmo de Prim
+	void Dijkstra_(double &comparaciones, unsigned s); // Algoritmo de Dijkstra
+  void BellmanFordEnd_(double &comparaciones, unsigned s); // Algoritmo de BellmanFordEnd
+  void ComparativaCM();
 	~GRAFO(); //Destructor del objeto grafo
 };
 

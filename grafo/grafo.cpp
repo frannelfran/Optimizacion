@@ -270,3 +270,132 @@ void GRAFO::Algoritmo_Prim() {
     }
     cout << "Coste total == " << coste_total << endl; // MUestra el coste total
 }
+
+void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
+    vector<bool> PermanentementeEtiquetado;
+    vector<int> d;
+    vector<unsigned> pred;
+    int min;
+    unsigned candidato;
+    //Inicialmente no hay ningun nodo permanentemente etiquetado
+    PermanentementeEtiquetado.resize(n,false);
+    //Inicialmente todas las etiquetas distancias son infinito
+    d.resize(n,maxint);
+    //Inicialmente el pred es null
+    pred.resize(n,UERROR);
+    //La etiqueta distancia del nodo origen es 0, y es su propio pred
+    d[s]=0; pred[s]=s; comparaciones = 0;
+
+    do {
+        /*
+            - Buscamos un nodo candidato a ser permanentemente etiquetado: aquel
+            de entre los no permanentemente etiquetados, es decir, en el almacén con
+            menor etiqueta distancia no infinita.
+            - Si existe ese candidato, lo etiquetamos permanentemente y usamos
+            los arcos de la lista de sucesores para buscar atajos. Por cada
+            comparación realizada para buscar atajos, incrementamos el contador de
+            comparaciones.
+            - Esto lo hacemos mientras haya candidatos
+        */
+
+        // Si no existen candiatos es que ya hemos etiquetado permanentemente todos lo nodos desde el nodo origen.
+
+        // Inicializo el mínimo a infinit
+        min = maxint;
+        // Inicializo el candidato a UERROR
+        candidato = UERROR;
+        // Busco el candidato
+        for(int i = 0; i < n; i++) {
+            if (!PermanentementeEtiquetado[i] && d[i] < min) {
+                min = d[i];
+                candidato = i;
+            }
+        }
+        // Si el candidato == UERROR, significa que hemos acabado
+        if(candidato == UERROR) break;
+        // Si no es igual se etiqueta como Permanentementeetiquetado
+        PermanentementeEtiquetado[candidato] == true;
+        // Buscamos los atajos
+        for (unsigned i=0; i<LS[candidato].size(); i++) {
+            if (d[LS[candidato][i].j] > d[candidato] + LS[candidato][i].c) {
+                d[LS[candidato][i].j] = d[candidato] + LS[candidato][i].c;
+                pred[LS[candidato][i].j] = candidato;
+            }
+            comparaciones++;
+        }
+
+        // Hacemos todo lo de antes mientras haya candidato
+    }   while (candidato != UERROR);
+    
+    // En esta parte del código, mostramos los caminos mínimos para cada nodo si los hay.
+    for (unsigned i=0; i<n; i++) {
+        if (d[i] != maxint) {
+            cout << "Elcamino mínimo desde " << s+1 << " hasta " << i+1 << " es: ";
+            cout << i+1 << " <- " << pred[i]+1;
+            cout << " y su longitud es " << d[i] << endl;
+        }
+    }
+}
+
+void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
+    vector<int> d;
+    vector<unsigned> pred;
+    unsigned numeromejoras = 0;
+    bool mejora;
+    //Idem que en el algoritmo de Dijkstra
+    d.resize(n,maxint);
+    pred.resize(n,UERROR);
+    d[s]=0; pred[s]=s; comparaciones = 0;
+    do {
+
+        /*
+        Recorremos todos los arcos, y para cada (i, j), buscamos si d[j] > d[i] cij, y actualizamos d y pred, incrementando el contador comparaciones
+        cuando comparamos, independientemente de si mejoramos o no. 
+        Si al menos en una ocasion ha mejorado una etiqueta distancia, no hemos terminado; contabilizamos los bucles en los que ha habido mejora.
+        */
+
+        mejora = false;
+        for (unsigned i=0; i<n; i++) {
+            for (unsigned j=0; j<LS[i].size(); j++) {
+                if (d[LS[i][j].j] > d[i] + LS[i][j].c) {
+                    d[LS[i][j].j] = d[i] + LS[i][j].c;
+                    pred[LS[i][j].j] = i;
+                    mejora = true;
+                }
+                comparaciones++;
+            }
+        }
+        numeromejoras++;
+    }   while ((numeromejoras < n) && (mejora == true));
+
+    /*
+    Para salir del bucle, si mejora es true, pues hay un ciclo, pues hemos
+    realizado n+1 veces la relajacion con mejora; si mejora es false, pues
+    tenemos solucion. Mostramos los caminos mínimos que se puedan haber encontrado, o
+    advertimos de la existencia de un ciclo de coste negativo.
+    */
+
+    if (mejora == true) {
+        cout << "Hay un ciclo de coste negativo" << endl;
+    } else {
+        cout << "Soluciones:" << endl;
+        for (unsigned i=0; i<n; i++) {
+            if (d[i] != maxint) {
+                cout << "Elcamino mínimo desde " << s+1 << " hasta " << i+1 << " es: ";
+                cout << i+1 << " <- " << pred[i]+1;
+                cout << " y su longitud es " << d[i] << endl;
+            }
+        }
+    }
+}
+
+void GRAFO::ComparativaCM() {
+    double comparacionesDijkstra, comparacionesBellmanFord;
+    int s;
+    cout << "Introduce el nodo [1, " << n << "]: ";
+    cin >> s;
+    Dijkstra_(comparacionesDijkstra, s-1);
+    cout << "Comparaciones Dijkstra: " << comparacionesDijkstra << endl;
+    BellmanFordEnd_(comparacionesBellmanFord, s-1);
+    cout << "Comparaciones Bellman-Ford: " << comparacionesBellmanFord << endl;
+}

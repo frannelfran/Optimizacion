@@ -33,6 +33,7 @@ void menu (unsigned dirigido, char &opcion) {
         cout << "d. Caminos minimos: [d]ijkstra" << endl;
         cout << "v. Caminos minimos: Comparamos Dijkstra [v]s BellmanFordEnd" << endl;
         cout << "f. Caminos minimos: [f]loyd-warshall" << endl;
+        cout << "v. Dijkstra [v]s Bellman-Ford" << endl;
     };
     cout << "q. Finalizar el programa" << endl;
     cout << "Introduce la letra de la accion a ejecutar  > ";
@@ -97,8 +98,13 @@ int main(int argc, char *argv[]) {
                 case 'm':
                 G.RecorridoAmplitud();
                 break;
+                // Algoritmo de Prim
                 case 'P':
                 G.Algoritmo_Prim();
+                break;
+                // Comparar BelmanFordEnd con Dijsktra
+                case 'v':
+                G.ComparativaCM();
                 break;
             }
 		//Situar aquí el resto de opciones del menú
