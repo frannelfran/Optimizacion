@@ -319,10 +319,10 @@ void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
         // Buscamos los atajos
         for (unsigned i = 0; i < LS[candidato].size(); i++) {
             if (d[LS[candidato][i].j] > d[candidato] + LS[candidato][i].c) {
-                d[LS[candidato][i].j] = d[candidato] + LS[candidato][i].c;
-                pred[LS[candidato][i].j] = candidato;
+                d[LS[candidato][i].j] = d[candidato] + LS[candidato][i].c; // Actualizo de y j si es mas barato el coste
+                pred[LS[candidato][i].j] = candidato; // Asignamos el valor de pred al candidato
             }
-            comparaciones++;
+            comparaciones++; // Incremento el número de comparaciones
         }
         // Hacemos todo lo de antes mientras haya candidato
     }   while (candidato != UERROR);
