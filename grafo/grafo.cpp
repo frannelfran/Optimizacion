@@ -399,3 +399,5 @@ void GRAFO::ComparativaCM() {
     BellmanFordEnd_(comparacionesBellmanFord, s-1);
     cout << "Comparaciones Bellman-Ford: " << comparacionesBellmanFord << endl;
 }
+
+// sopa
