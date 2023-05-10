@@ -32,6 +32,7 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
 		// los nodos internamente se numeran desde 0 a n-1
 		// creamos las n listas de sucesores
 		LS.resize(n);
+        A.resize(n);
         if(dirigido == 1) { // Si el grafo es dirigido creamos las n listas de predecesores
             LP.resize(n);
         }
@@ -39,18 +40,21 @@ void GRAFO :: build (char nombrefichero[85], int &errorapertura) {
 		for (k=0;k<m;k++) {
 			textfile >> (unsigned &) i  >> (unsigned &) j >> (int &) dummy.c; // Valor de dummy.c
             dummy.j = j - 1; // Valor de dummy.j
-            LS[i - 1].push_back(dummy); //situamos en la posición del nodo i a dummy mediante push_back
+            //situamos en la posición del nodo i a dummy mediante push_back
             // Creo un dummy2 de la estructura "ElementoLista" para almacenar los predecesores y la lista de adyacencia
-            ElementoLista dummy2;
-            dummy2.j = i - 1;
-            dummy2.c = dummy.c;
-
             //pendiente de hacer un segundo push_back si es no dirigido. O no. 
-            if(dirigido == 0 and i != j) {
-                LS[j - 1].push_back(dummy2);
+            if(dirigido == 0) {
+                LS[i - 1].emplace_back(dummy);
+                dummy.j = i - 1;
+                if((i - 1) != (j - 1)) {
+                    LS[j - 1].emplace_back(dummy);
+                } 
             }
-            else if(dirigido == 1) {
-                LP[j - 1].push_back(dummy2); // pendiente la construcción de LP, si es dirigido
+            // pendiente la construcción de LP, si es dirigido 
+            if(dirigido == 1) {
+                LS[i -1].emplace_back(dummy);
+                dummy.j = i - 1;
+                LP[j - 1].emplace_back(dummy);
             }
 
 			//pendiente del valor a devolver en errorapertura
