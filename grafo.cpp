@@ -273,7 +273,7 @@ void GRAFO::Algoritmo_Prim() {
     cout << "Coste total == " << coste_total << endl; // MUestra el coste total
 }
 
-void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
+void GRAFO::Dijkstra_(double &comparaciones, unsigned origen) {
     cout << "soluciones:" << endl;
     vector<bool> PermanentementeEtiquetado;
     vector<int> d;
@@ -287,7 +287,7 @@ void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
     //Inicialmente el pred es null
     pred.resize(n,UERROR);
     //La etiqueta distancia del nodo origen es 0, y es su propio pred
-    d[s]=0; pred[s]=s; comparaciones = 0;
+    d[origen]=0; pred[origen]=origen; comparaciones = 0;
 
     do {
         /*
@@ -303,12 +303,12 @@ void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
 
         // Si no existen candiatos es que ya hemos etiquetado permanentemente todos lo nodos desde el nodo origen.
 
-        // Inicializo el mínimo a infinit
+        // Inicializo el mínimo a infinito
         min = maxint;
         // Inicializo el candidato a UERROR
         candidato = UERROR;
         // Busco el candidato
-        for(int i = 0; i < n; i++) {
+        for(unsigned i = 0; i < n; i++) {
             if (!PermanentementeEtiquetado[i] && d[i] < min) {
                 min = d[i];
                 candidato = i;
@@ -316,9 +316,9 @@ void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
         }
         // Si el candidato == UERROR, significa que hemos acabado
         if(candidato == UERROR) break;
-        // Si no es igual se etiqueta como Permanentementeetiquetado
-        PermanentementeEtiquetado[candidato] = true;
-        // Buscamos los atajos
+            // Si no es igual se etiqueta como Permanentementeetiquetado
+            PermanentementeEtiquetado[candidato] = true;
+            // Buscamos los atajos
         for (unsigned i = 0; i < LS[candidato].size(); i++) {
             if (d[LS[candidato][i].j] > d[candidato] + LS[candidato][i].c) {
                 d[LS[candidato][i].j] = d[candidato] + LS[candidato][i].c; // Actualizo de y j si es mas barato el coste
@@ -328,26 +328,35 @@ void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
         }
         // Hacemos todo lo de antes mientras haya candidato
     }   while (candidato != UERROR);
-    
+
     // En esta parte del código, mostramos los caminos mínimos para cada nodo si los hay.
     for (unsigned i = 0; i < n; i++) {
-        if (d[i] != maxint) {
-            cout << "El camino mínimo desde " << s+1 << " hasta " << i+1 << " es: ";
-            cout << i+1 << " <- " << pred[i]+1;
-            cout << " y su longitud es " << d[i] << endl;
+        if(i != origen) {
+            if(d[i] == maxint) {
+                cout << "No hay camino desde " << origen + 1 << " hasta " << i + 1 << endl;
+            } else {
+                cout << "El camino desde " << origen + 1 << " hasta " << i + 1 << " es: ";
+                for(unsigned j = i; j!= origen; j = pred[j]) {
+                    cout << j + 1;
+                    if(pred[j] != origen) cout << " - ";
+                }
+                cout << " y su longitud es " << d[i] << endl; // Muestra la distancia
+            }
         }
     }
 }
 
-void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
+void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned origen) {
     vector<int> d;
     vector<unsigned> pred;
     unsigned numeromejoras = 0;
     bool mejora;
+
     //Idem que en el algoritmo de Dijkstra
     d.resize(n,maxint);
     pred.resize(n,UERROR);
-    d[s]=0; pred[s]=s; comparaciones = 0;
+    d[origen]=0; pred[origen]=origen; comparaciones = 0;
+
     do {
 
         /*
@@ -357,8 +366,8 @@ void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
         */
 
         mejora = false;
-        for (unsigned i=0; i<n; i++) {
-            for (unsigned j=0; j<LS[i].size(); j++) {
+        for (unsigned i = 0; i < n; i++) {
+            for (unsigned j = 0; j < LS[i].size(); j++) {
                 if (d[LS[i][j].j] > d[i] + LS[i][j].c) {
                     d[LS[i][j].j] = d[i] + LS[i][j].c; // Actualizamos la distancia ya que hemos encontrado un menor coste
                     pred[LS[i][j].j] = i; // Actualizamos el predecesor
@@ -381,11 +390,18 @@ void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
         cout << "Hay un ciclo de coste negativo" << endl;
     } else {
         cout << "Soluciones:" << endl;
-        for (unsigned i=0; i<n; i++) {
-            if (d[i] != maxint) {
-                cout << "El camino mínimo desde " << s+1 << " hasta " << i+1 << " es: "; // Muestra el camino mínimo entre los nodos
-                cout << i+1 << " <- " << pred[i]+1; 
-                cout << " y su longitud es " << d[i] << endl; // Muestra la distancia
+        for (unsigned i = 0; i < n; i++) {
+            if(i != origen) {
+                if (d[i] == maxint) {
+                    cout << "No hay camino desde " << origen + 1 << " hasta " << i + 1 << endl;
+                } else {
+                    cout << "El camino desde " << origen + 1 << " hasta " << i + 1 << " es: "; // Muestra el camino mínimo entre los nodos
+                    for(unsigned j = i; j!= origen; j = pred[j]) {
+                        cout << j + 1;
+                        if(pred[j] != origen) cout << " - ";
+                    }
+                    cout << " y su longitud es " << d[i] << endl; // Muestra la distancia
+                }
             }
         }
     }
@@ -393,12 +409,14 @@ void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
 
 void GRAFO::ComparativaCM() {
     double comparacionesDijkstra, comparacionesBellmanFord;
-    int s;
+    int origen;
     cout << "Introduce el nodo [1, " << n << "]: ";
-    cin >> s;
-    Dijkstra_(comparacionesDijkstra, s-1);
+    cin >> origen;
+    Dijkstra_(comparacionesDijkstra, origen - 1);
     cout << "Comparaciones Dijkstra: " << comparacionesDijkstra << endl;
     cout << endl; // Nueva línea
-    BellmanFordEnd_(comparacionesBellmanFord, s-1);
+    BellmanFordEnd_(comparacionesBellmanFord, origen - 1);
     cout << "Comparaciones Bellman-Ford: " << comparacionesBellmanFord << endl;
+    cout << "\nEl algoritmo general basada en la condición de optimalidad de Bellman, Ford y End ha realizado ";
+    cout << comparacionesBellmanFord / comparacionesDijkstra << " veces más comparaciones para mejorar la etiqueta distancia que Dijkstra.\n\n";
 }
