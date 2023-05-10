@@ -360,15 +360,15 @@ void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
         for (unsigned i=0; i<n; i++) {
             for (unsigned j=0; j<LS[i].size(); j++) {
                 if (d[LS[i][j].j] > d[i] + LS[i][j].c) {
-                    d[LS[i][j].j] = d[i] + LS[i][j].c;
-                    pred[LS[i][j].j] = i;
-                    mejora = true;
+                    d[LS[i][j].j] = d[i] + LS[i][j].c; // Actualizamos la distancia ya que hemos encontrado un menor coste
+                    pred[LS[i][j].j] = i; // Actualizamos el predecesor
+                    mejora = true; // Hemos mejorado
                 }
-                comparaciones++;
+                comparaciones++; // Incrementa el número de comparaciones
             }
         }
-        numeromejoras++;
-    }   while ((numeromejoras < n) && (mejora == true));
+        numeromejoras++; // Aumenta el número de mejoras
+    }   while ((numeromejoras < n) && (mejora == true)); // Hacer mientras el número de mejores sea menor del número de nodos y mientras haya mejoras
 
     /*
     Para salir del bucle, si mejora es true, pues hay un ciclo, pues hemos
@@ -377,15 +377,15 @@ void GRAFO::BellmanFordEnd_(double &comparaciones, unsigned s) {
     advertimos de la existencia de un ciclo de coste negativo.
     */
 
-    if (mejora == true) {
+    if (mejora == true) { // Comprueba que no haya un ciclo negativo 
         cout << "Hay un ciclo de coste negativo" << endl;
     } else {
         cout << "Soluciones:" << endl;
         for (unsigned i=0; i<n; i++) {
             if (d[i] != maxint) {
-                cout << "Elcamino mínimo desde " << s+1 << " hasta " << i+1 << " es: ";
-                cout << i+1 << " <- " << pred[i]+1;
-                cout << " y su longitud es " << d[i] << endl;
+                cout << "El camino mínimo desde " << s+1 << " hasta " << i+1 << " es: "; // Muestra el camino mínimo entre los nodos
+                cout << i+1 << " <- " << pred[i]+1; 
+                cout << " y su longitud es " << d[i] << endl; // Muestra la distancia
             }
         }
     }
