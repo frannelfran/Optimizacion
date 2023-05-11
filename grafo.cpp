@@ -179,6 +179,8 @@ void GRAFO::PredecesoresRecursivos(int s,int i,LA_nodo pred) {
   } else {std::cout << s + 1;}
 }
 */
+
+
 /*
 void GRAFO::FloydWarshall() //Algoritmo de FW para caminos mínimos entre cualquier par de nodos;
 {
@@ -294,6 +296,7 @@ std::cout << "   Costes" << std::endl << std::endl;
 }
 */
 
+
 //Ejecuta el algoritmo de Prim y muestra el árbol por pantalla
 
 void GRAFO::Algoritmo_Prim() {
@@ -349,8 +352,7 @@ void GRAFO::Algoritmo_Prim() {
 }
 
 //Ejecuta el algoritmo de disjktra y muestra el camino mínimo entre dos nodos
-void GRAFO::Dijkstra_(double &comparaciones, unsigned s)
-{
+void GRAFO::Dijkstra_(double &comparaciones, unsigned s) {
     cout << "Soluciones:" << endl;
     vector<bool> PermanentementeEtiquetado; //Almacén de nodos permanentemente etiquetados
     vector<int> d; //Etiquetas distancia
